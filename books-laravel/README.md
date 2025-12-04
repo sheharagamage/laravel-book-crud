@@ -1,59 +1,207 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Library Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack library management application built with Laravel (backend) and React (frontend) with TypeScript.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Manager Authentication**: Secure login system for library managers
+- **Book Management**: Add, edit, delete, and search books with categories
+- **Member Management**: Register library members with name and age
+- **Transaction Tracking**: Process book borrowing and returns
+- **Smart Validation**: 
+  - Only borrowers can return books
+  - Members with active borrowed books cannot be deleted
+  - Real-time stock management
+- **Toast Notifications**: User-friendly success and error messages
+- **Responsive Design**: Modern UI with TailwindCSS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technology Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Backend
+- **Laravel 12**: PHP framework
+- **MySQL**: Database
+- **RESTful API**: JSON-based API endpoints
 
-## Learning Laravel
+### Frontend
+- **React 19**: UI library
+- **TypeScript**: Type-safe JavaScript
+- **TailwindCSS**: Utility-first CSS framework
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.2
+- Composer
+- Node.js >= 18.x
+- MySQL >= 8.0
+- Git
 
-## Laravel Sponsors
+## Installation & Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone the Repository
 
-### Premium Partners
+```bash
+git clone https://github.com/sheharagamage/laravel-book-crud.git
+cd laravel-book-crud
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Backend Setup (Laravel)
 
-## Contributing
+```bash
+# Navigate to Laravel directory
+cd books-laravel
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Install PHP dependencies
+composer install
 
-## Code of Conduct
+# Create environment file
+copy .env.example .env
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Generate application key
+php artisan key:generate
 
-## Security Vulnerabilities
+# Configure database in .env file
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=Book_management
+# DB_USERNAME=root
+# DB_PASSWORD=
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Run migrations and seed database
+php artisan migrate:fresh --seed
+
+# Start Laravel development server
+php artisan serve
+```
+
+The backend will run on `http://localhost:8000`
+
+### 3. Frontend Setup (React)
+
+Open a new terminal window:
+
+```bash
+# Navigate to React directory
+cd books-frontend/my-app
+
+# Install dependencies
+npm install
+
+# Start React development server
+npm start
+```
+
+The frontend will run on `http://localhost:3000`
+
+## Default Credentials
+
+**Library Manager Login:**
+- Email: `manager@library.com`
+- Password: `manager123`
+
+## Database Structure
+
+### Tables
+- **users**: Library managers and members
+- **book_cate**: Book categories
+- **books**: Book inventory with stock tracking
+- **borrows**: Transaction history (issue/return)
+
+### Relationships
+- Books belong to categories
+- Books are created by managers (users)
+- Borrows track user-book transactions
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/login` - Manager login
+- `POST /api/auth/logout` - Logout
+
+### Books
+- `GET /api/books` - List all books
+- `POST /api/books` - Create book
+- `GET /api/books/{id}` - Get book details
+- `PUT /api/books/{id}` - Update book
+- `DELETE /api/books/{id}` - Delete book
+
+### Categories
+- `GET /api/categories` - List all categories
+
+### Users (Members)
+- `GET /api/users` - List all members
+- `POST /api/users` - Create member
+- `GET /api/users/{id}` - Get member details
+- `PUT /api/users/{id}` - Update member
+- `DELETE /api/users/{id}` - Delete member (if no active borrows)
+
+### Transactions
+- `GET /api/borrows` - List all transactions
+- `POST /api/borrows` - Create transaction (borrow/return)
+
+## Usage Guide
+
+1. **Login** as library manager with default credentials
+2. **Add Categories**: Pre-seeded with 5 categories (Fiction, Non-Fiction, etc.)
+3. **Add Books**: Create books with title, author, price, stock, and category
+4. **Add Members**: Register library members with name and age
+5. **Borrow Books**: Select a book and member to process borrowing
+6. **Return Books**: Only the borrower can return their borrowed books
+7. **View Transactions**: See complete history of all borrows and returns
+
+## Development Notes
+
+### Backend API Base URL
+Update in `books-frontend/my-app/src/services/api.ts`:
+```typescript
+const API_BASE_URL = 'http://localhost:8000/api';
+```
+
+### CORS Configuration
+CORS is configured in `books-laravel/bootstrap/app.php` to allow frontend requests.
+
+## Troubleshooting
+
+**Port already in use:**
+```bash
+# Laravel
+php artisan serve --port=8001
+
+# React
+PORT=3001 npm start
+```
+
+**Database connection error:**
+- Verify MySQL is running
+- Check .env database credentials
+- Create database: `CREATE DATABASE Book_management;`
+
+**Composer/NPM errors:**
+- Clear cache: `composer clear-cache` or `npm cache clean --force`
+- Delete vendor/node_modules and reinstall
+
+## Production Build
+
+### Frontend
+```bash
+cd books-frontend/my-app
+npm run build
+```
+
+### Backend
+```bash
+cd books-laravel
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Author
+
+**Shehara Gamage**
+- GitHub: [@sheharagamage](https://github.com/sheharagamage)
+- Repository: [laravel-book-crud](https://github.com/sheharagamage/laravel-book-crud)
